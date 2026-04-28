@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,313 +13,108 @@
         }
 
         body {
-            margin: 0;
-            padding: 0;
-            background-color: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            font-family: 'Georgia', serif;
-            overflow-x: hidden;
+            margin: 0; padding: 0; background-color: #000;
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; font-family: 'Georgia', serif; overflow: hidden;
         }
 
         .invitation-container {
-            position: relative;
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            position: relative; width: 100vw; height: 100vh;
+            display: flex; justify-content: center; align-items: center;
         }
 
-        /* --- ENVELOPE --- */
+        /* --- ENVELOPE (Desktop) --- */
         .envelope-wrapper {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            width: 500px;
-            height: 350px;
-            background-color: var(--env-color);
-            z-index: 10;
-            border: 1px solid var(--gold-solid);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            animation: move-env 1s cubic-bezier(0.165, 0.84, 0.44, 1) forwards 2s;
+            position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+            width: 500px; height: 350px; background-color: var(--env-color);
+            z-index: 10; border: 1px solid var(--gold-solid);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            animation: move-env 1.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards 2.5s;
         }
 
         .envelope-wrapper::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            border-left: 250px solid transparent;
-            border-right: 250px solid transparent;
-            border-top: 180px solid #222;
-            transform-origin: top;
-            z-index: 13;
-            animation: open-flap 0.7s ease-in-out forwards 1s;
+            content: ""; position: absolute; top: 0; left: 0;
+            border-left: 250px solid transparent; border-right: 250px solid transparent;
+            border-top: 180px solid #222; transform-origin: top;
+            z-index: 13; animation: open-flap 0.7s ease-in-out forwards 1s;
         }
 
-        .env-image {
-            width: 120px;
-            opacity: 0.8;
-            margin-bottom: 10px;
-            z-index: 12;
-        }
-
-        .env-text {
-            color: var(--gold-solid);
-            font-size: 1.2rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
+        .env-image { width: 120px; opacity: 0.8; margin-bottom: 10px; z-index: 12; }
+        .env-text { color: var(--gold-solid); font-size: 1.2rem; text-transform: uppercase; letter-spacing: 2px; z-index: 12; }
 
         /* --- CARD --- */
         .card {
             background-color: var(--bg-color);
-            width: 950px;
-            height: 680px;
-            position: absolute;
-            display: flex;
-            z-index: 5;
-            opacity: 0;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%) scale(0.4);
+            width: 950px; height: 680px; 
+            position: absolute; display: flex; z-index: 5; opacity: 0;
+            left: 50%; top: 50%; transform: translate(-50%, -50%) scale(0.4);
             border: 1px solid rgba(251, 212, 80, 0.1);
-            animation: card-out 1.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards 1.8s;
+            animation: card-out 1.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards 2s;
         }
 
-        .image-side {
-            flex: 1.1;
-            background-color: #161616;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+        .image-side { flex: 1.1; background-color: #161616; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+        .image-side img { width: 100%; height: 70%; object-fit: cover; }
 
-        .image-side img {
-            width: 100%;
-            height: 80%;
-            object-fit: cover;
-        }
+        .content-side { flex: 0.9; padding: 40px; display: flex; flex-direction: column; justify-content: center; text-align: center; }
+        h1 { font-family: Arial; font-weight: 900; font-size: 2.2rem; color: #FBD450; text-transform: uppercase; margin: 0; }
 
-        .content-side {
-            flex: 0.9;
-            padding: 40px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            text-align: center;
-        }
+        .main-buttons { display: flex; flex-direction: column; align-items: center; gap: 12px; margin: 25px 0; }
+        .btn-yes, .btn-no { width: 260px; padding: 14px; border-radius: 50px; cursor: pointer; font-weight: bold; border: none; transition: 0.3s; }
+        .btn-yes { background: var(--btn-gold); color: white; }
+        .btn-no { background: transparent; color: var(--btn-gold); border: 2px solid var(--btn-gold); }
 
-        h1 {
-            font-family: Arial;
-            font-weight: 900;
-            font-size: 2.2rem;
-            color: #FBD450;
-            text-transform: uppercase;
-            margin: 0;
-        }
+        /* Desktop Animations */
+        @keyframes open-flap { 100% { transform: rotateX(180deg); z-index: 1; } }
+        @keyframes move-env { 100% { left: 20%; transform: translate(-50%, -50%) scale(0.5); opacity: 0; visibility: hidden; } }
+        @keyframes card-out { 0% { opacity: 0; transform: translate(-50%, -50%) scale(0.4); } 100% { opacity: 1; transform: translate(-25%, -50%) scale(0.95); } }
 
-        .main-buttons {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-            margin: 25px 0;
-        }
-
-        .btn-yes,
-        .btn-no {
-            width: 260px;
-            padding: 14px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            border: none;
-            transition: 0.3s;
-        }
-
-        .btn-yes {
-            background: var(--btn-gold);
-            color: white;
-        }
-
-        .btn-no {
-            background: transparent;
-            color: var(--btn-gold);
-            border: 2px solid var(--btn-gold);
-        }
-
-        /* --- SUCCESS MESSAGE (Slowed Down & Refined) --- */
-        #thanks-message {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 300;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: var(--gold-solid);
-            opacity: 0;
-            animation: slowFadeIn 1.5s ease-out forwards;
-            /* Slower Fade */
-        }
-
-        .thanks-box {
-            border: 2px solid var(--gold-solid);
-            padding: 50px;
-            border-radius: 20px;
-            max-width: 550px;
-            background: #1a1a1a;
-            box-shadow: 0 0 40px rgba(251, 212, 80, 0.15);
-        }
-
-        .thanks-box h2 {
-            font-size: 2.8rem;
-            margin-bottom: 20px;
-            font-family: 'Georgia', serif;
-        }
-
-        .thanks-box p {
-            color: #fff;
-            font-size: 1.2rem;
-            line-height: 1.8;
-            margin-bottom: 20px;
-        }
-
-        .refresh-note {
-            color: #555;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        /* Animations */
-        @keyframes slowFadeIn {
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes open-flap {
-            100% {
-                transform: rotateX(180deg);
-                z-index: 1;
-            }
-        }
-
-        @keyframes move-env {
-            100% {
-                left: 20%;
-                transform: translate(-50%, -50%) scale(0.5);
-                opacity: 0.2;
-            }
-        }
-
-        @keyframes card-out {
-            0% {
-                opacity: 0;
-                transform: translate(-50%, -50%) scale(0.4);
-            }
-
-            100% {
-                opacity: 1;
-                transform: translate(-30%, -50%) scale(0.95);
-            }
-        }
-
+        /* --- MOBILE FIXES (REBUILT) --- */
         @media (max-width: 900px) {
-            .envelope-wrapper {
-                width: 320px;
-                height: 230px;
-                animation: move-env-mobile 0.8s forwards 2s;
+            .envelope-wrapper { 
+                width: 320px; height: 230px; 
+                animation: move-env-mobile 1s ease-in-out forwards 2.5s;
             }
+            .envelope-wrapper::before { 
+                border-left: 160px solid transparent; 
+                border-right: 160px solid transparent; 
+                border-top: 115px solid #222; 
+            }
+            .env-image { width: 90px; }
 
             .card {
-                flex-direction: column;
-                width: 95%;
-                height: auto;
-                min-height: 600px;
-                animation: card-out-mobile 1s forwards 1.8s;
+                flex-direction: column; width: 92%; height: auto; min-height: 600px;
+                animation: card-out-mobile 1.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards 2s;
             }
+            .image-side { height: 250px; flex: none; }
+            .image-side img { object-fit: contain; }
+            .content-side { padding: 25px 15px; }
+            h1 { font-size: 1.8rem; }
+            .btn-yes, .btn-no { width: 100%; max-width: 280px; }
 
-            .image-side {
-                height: 250px;
+            @keyframes move-env-mobile { 
+                100% { opacity: 0; transform: translate(-50%, -80%) scale(0.7); visibility: hidden; } 
             }
-
-            .content-side {
-                padding: 30px 15px;
-            }
-
-            @keyframes move-env-mobile {
-                100% {
-                    opacity: 0;
-                    visibility: hidden;
-                }
-            }
-
-            @keyframes card-out-mobile {
-                0% {
-                    opacity: 0;
-                    transform: translate(-50%, -40%) scale(0.8);
-                }
-
-                100% {
-                    opacity: 1;
-                    transform: translate(-50%, -50%) scale(1);
-                }
+            @keyframes card-out-mobile { 
+                0% { opacity: 0; transform: translate(-50%, -40%) scale(0.6); } 
+                100% { opacity: 1; transform: translate(-50%, -50%) scale(1); } 
             }
         }
 
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            z-index: 100;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(5px);
+        /* Success Message Overlay */
+        #thanks-message {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); z-index: 300; justify-content: center; align-items: center;
+            opacity: 0; animation: slowFade 1.5s forwards;
         }
+        .thanks-box { border: 2px solid var(--gold-solid); padding: 40px; border-radius: 20px; background: #1a1a1a; max-width: 450px; text-align: center; }
+        @keyframes slowFade { to { opacity: 1; } }
 
-        .modal {
-            background: #252525;
-            padding: 30px;
-            border-radius: 15px;
-            border: 1px solid var(--gold-solid);
-            width: 300px;
-            text-align: center;
-            color: white;
-        }
-
-        .modal input {
-            width: 90%;
-            padding: 12px;
-            margin: 10px 0;
-            background: #111;
-            border: 1px solid #333;
-            color: #fff;
-            border-radius: 5px;
-        }
+        /* Modal */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 100; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
+        .modal { background: #252525; padding: 30px; border-radius: 15px; border: 1px solid var(--gold-solid); width: 280px; text-align: center; color: white; }
+        .modal input { width: 90%; padding: 12px; margin: 10px 0; background: #111; border: 1px solid #333; color: #fff; }
     </style>
 </head>
-
 <body>
 
     <div class="invitation-container" id="main-ui">
@@ -352,24 +146,21 @@
         </div>
     </div>
 
-    <div id="thanks-message">
+    <div id="thanks-message" onclick="location.reload()">
         <div class="thanks-box">
-            <!-- <h2 id="thanks-title">RSVP Received</h2> -->
-            <p id="thanks-body"></p>
-            <div class="refresh-note">Click anywhere or wait 10 seconds to return</div>
+            <!-- <h2 style="color: var(--gold-solid);">RSVP Received</h2> -->
+            <p id="thanks-body" style="color: #fff; line-height: 1.6;"></p>
+            <div style="color: #555; font-size: 0.8rem; margin-top: 20px;">Click anywhere to return</div>
         </div>
     </div>
 
     <div class="modal-overlay" id="rsvpModal">
         <div class="modal">
-            <h2 style="color: var(--gold-solid);">RSVP</h2>
+            <!-- <h2 style="color: var(--gold-solid);">RSVP</h2> -->
             <input type="text" id="guestName" placeholder="Your Name">
-            <div id="countDiv"><input type="number" id="guestCount" placeholder="Guests" value="1"></div>
-            <button id="saveBtn" onclick="submitRSVP()"
-                style="background:var(--gold-solid); padding: 12px; border:none; cursor:pointer; font-weight:bold; width: 100%; margin-top: 10px; border-radius: 50px;">SAVE
-                RESPONSE</button>
-            <button onclick="closeModal()"
-                style="background:#444; color:white; border:none; padding:10px; cursor:pointer; width: 100%; margin-top: 5px; border-radius: 50px;">CANCEL</button>
+            <div id="countDiv"><input type="number" id="guestCount" value="1"></div>
+            <button id="saveBtn" onclick="submitRSVP()" style="background:var(--gold-solid); padding: 12px; border:none; width: 100%; margin-top: 10px; font-weight: bold; cursor: pointer; border-radius: 5px;">SAVE RESPONSE</button>
+            <button onclick="closeModal()" style="background:#444; color:white; border:none; padding:10px; width: 100%; margin-top: 5px; cursor: pointer; border-radius: 5px;">CANCEL</button>
         </div>
     </div>
 
@@ -377,68 +168,42 @@
         const scriptURL = 'https://script.google.com/macros/s/AKfycbykpS6vy24gX4U0clw0tIoDT1VG534rwswNKGrRT-ZzSwgmvjielQSlJzcJRBCaB_7P/exec';
         let rsvpType = '';
 
-        function openModal(t) {
-            rsvpType = t;
-            document.getElementById('rsvpModal').style.display = 'flex';
-            document.getElementById('countDiv').style.display = (t === 'no' ? 'none' : 'block');
+        function openModal(t) { 
+            rsvpType = t; 
+            document.getElementById('rsvpModal').style.display = 'flex'; 
+            document.getElementById('countDiv').style.display = (t==='no'?'none':'block'); 
         }
         function closeModal() { document.getElementById('rsvpModal').style.display = 'none'; }
 
         function submitRSVP() {
             const name = document.getElementById('guestName').value;
-            if (!name) return alert("Please enter your name");
-
+            if(!name) return alert("Please enter your name");
             const btn = document.getElementById('saveBtn');
             btn.innerText = "Processing...";
             btn.disabled = true;
 
-            fetch(scriptURL, {
-                method: 'POST',
-                mode: 'no-cors',
-                body: JSON.stringify({
-                    name: name,
-                    status: rsvpType,
-                    count: rsvpType === 'no' ? 0 : document.getElementById('guestCount').value
-                })
+            fetch(scriptURL, { 
+                method: 'POST', 
+                mode: 'no-cors', 
+                body: JSON.stringify({ 
+                    name: name, status: rsvpType, 
+                    count: rsvpType === 'no' ? 0 : document.getElementById('guestCount').value 
+                }) 
             }).then(() => {
-                showFinalMessage(name, rsvpType);
-            }).catch(() => {
-                alert("Error! Please try again.");
-                btn.innerText = "SAVE RESPONSE";
-                btn.disabled = false;
+                closeModal();
+                document.getElementById('main-ui').style.display = 'none';
+                const thanksUI = document.getElementById('thanks-message');
+                thanksUI.style.display = 'flex';
+                document.getElementById('thanks-body').innerHTML = rsvpType === 'yes' ? 
+                    `Warm regards, <strong>${name}</strong>. <br><br>Fatima is absolutely delighted that you'll be joining her for this special milestone. Your presence will make the evening truly memorable.` : 
+                    `Thank you for letting us know, <strong>${name}</strong>. While we'll miss your presence at the celebration, Fatima sends her warmest wishes and appreciates your response.`;
+                
+                setTimeout(() => { location.reload(); }, 12000); // 12 seconds stay
             });
         }
 
-        function showFinalMessage(name, status) {
-            closeModal();
-            document.getElementById('main-ui').style.display = 'none';
-            const thanksUI = document.getElementById('thanks-message');
-            const thanksBody = document.getElementById('thanks-body');
-
-            thanksUI.style.display = 'flex';
-
-            if (status === 'yes') {
-                thanksBody.innerHTML = `Warm regards, <strong>${name}</strong>.<br><br>Fatima is absolutely delighted that you'll be joining her for this special milestone. Your presence will make the evening truly memorable.`;
-            } else {
-                thanksBody.innerHTML = `Thank you for letting us know, <strong>${name}</strong>.<br><br>While we'll miss your presence at the celebration, Fatima sends her warmest wishes and appreciates your response.`;
-            }
-
-            // Extended Delay (10 seconds)
-            setTimeout(() => {
-                location.reload();
-            }, 30000);
-
-            // Allow manual click to refresh immediately
-            thanksUI.onclick = () => location.reload();
-        }
-
-        function addCalendar() {
-            window.open('https://www.google.com/calendar/render?action=TEMPLATE&text=Fatima Bar Call Party&dates=20260504T173000Z/20260504T203000Z&location=5075 Falconridge Blvd NE Calgary', '_blank');
-        }
-        function viewMap() {
-            window.open('https://www.google.com/maps/search/?api=1&query=5075+Falconridge+Blvd+NE+1009+Calgary', '_blank');
-        }
+        function addCalendar() { window.open('https://www.google.com/calendar/render?action=TEMPLATE&text=Fatima Bar Call Party&dates=20260504T173000Z/20260504T203000Z&location=5075 Falconridge Blvd NE Calgary', '_blank'); }
+        function viewMap() { window.open('https://www.google.com/maps/search/?api=1&query=5075+Falconridge+Blvd+NE+1009+Calgary', '_blank'); }
     </script>
 </body>
-
 </html>
