@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fatima's Bar Call Party</title>
+    <style>
+        :root {
+            --bg-color: #1C1C1C;
+            --gold-solid: #FBD450;
+            --btn-gold: #a6a154;
+            --env-color: #141414;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Georgia', serif;
+            overflow-x: hidden;
+        }
+
+        .invitation-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* --- ENVELOPE --- */
+        .envelope-wrapper {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: 350px;
+            background-color: var(--env-color);
+            z-index: 10;
+            border: 1px solid var(--gold-solid);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            animation: move-env 1s cubic-bezier(0.165, 0.84, 0.44, 1) forwards 2s;
+        }
+
+        .envelope-wrapper::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-left: 250px solid transparent;
+            border-right: 250px solid transparent;
+            border-top: 180px solid #222;
+            transform-origin: top;
+            z-index: 13;
+            animation: open-flap 0.7s ease-in-out forwards 1s;
+        }
+
+        .env-image {
+            width: 120px;
+            opacity: 0.8;
+            margin-bottom: 10px;
+            z-index: 12;
+        }
+
+        .env-text {
+            color: var(--gold-solid);
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* --- CARD --- */
+        .card {
+            background-color: var(--bg-color);
+            width: 950px;
+            height: 680px;
+            position: absolute;
+            display: flex;
+            z-index: 5;
+            opacity: 0;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%) scale(0.4);
+            border: 1px solid rgba(251, 212, 80, 0.1);
+            animation: card-out 1.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards 1.8s;
+        }
+
+        .image-side {
+            flex: 1.1;
+            background-color: #161616;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-side img {
+            width: 100%;
+            height: 80%;
+            object-fit: cover;
+        }
+
+        .content-side {
+            flex: 0.9;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+        }
+
+        h1 {
+            font-family: Arial;
+            font-weight: 900;
+            font-size: 2.2rem;
+            color: #FBD450;
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        .main-buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            margin: 25px 0;
+        }
+
+        .btn-yes,
+        .btn-no {
+            width: 260px;
+            padding: 14px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            border: none;
+            transition: 0.3s;
+        }
+
+        .btn-yes {
+            background: var(--btn-gold);
+            color: white;
+        }
+
+        .btn-no {
+            background: transparent;
+            color: var(--btn-gold);
+            border: 2px solid var(--btn-gold);
+        }
+
+        /* --- SUCCESS MESSAGE (Slowed Down & Refined) --- */
+        #thanks-message {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 300;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--gold-solid);
+            opacity: 0;
+            animation: slowFadeIn 1.5s ease-out forwards;
+            /* Slower Fade */
+        }
+
+        .thanks-box {
+            border: 2px solid var(--gold-solid);
+            padding: 50px;
+            border-radius: 20px;
+            max-width: 550px;
+            background: #1a1a1a;
+            box-shadow: 0 0 40px rgba(251, 212, 80, 0.15);
+        }
+
+        .thanks-box h2 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            font-family: 'Georgia', serif;
+        }
+
+        .thanks-box p {
+            color: #fff;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .refresh-note {
+            color: #555;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Animations */
+        @keyframes slowFadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes open-flap {
+            100% {
+                transform: rotateX(180deg);
+                z-index: 1;
+            }
+        }
+
+        @keyframes move-env {
+            100% {
+                left: 20%;
+                transform: translate(-50%, -50%) scale(0.5);
+                opacity: 0.2;
+            }
+        }
+
+        @keyframes card-out {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.4);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translate(-30%, -50%) scale(0.95);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .envelope-wrapper {
+                width: 320px;
+                height: 230px;
+                animation: move-env-mobile 0.8s forwards 2s;
+            }
+
+            .card {
+                flex-direction: column;
+                width: 95%;
+                height: auto;
+                min-height: 600px;
+                animation: card-out-mobile 1s forwards 1.8s;
+            }
+
+            .image-side {
+                height: 250px;
+            }
+
+            .content-side {
+                padding: 30px 15px;
+            }
+
+            @keyframes move-env-mobile {
+                100% {
+                    opacity: 0;
+                    visibility: hidden;
+                }
+            }
+
+            @keyframes card-out-mobile {
+                0% {
+                    opacity: 0;
+                    transform: translate(-50%, -40%) scale(0.8);
+                }
+
+                100% {
+                    opacity: 1;
+                    transform: translate(-50%, -50%) scale(1);
+                }
+            }
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal {
+            background: #252525;
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid var(--gold-solid);
+            width: 300px;
+            text-align: center;
+            color: white;
+        }
+
+        .modal input {
+            width: 90%;
+            padding: 12px;
+            margin: 10px 0;
+            background: #111;
+            border: 1px solid #333;
+            color: #fff;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="invitation-container" id="main-ui">
+        <div class="envelope-wrapper" id="envelope">
+            <img src="Invitation 1 (1).png" alt="Lady Justice" class="env-image">
+            <div class="env-text">Invitation</div>
+        </div>
+
+        <div class="card" id="party-card">
+            <div class="image-side"><img src="Invitation 1 (1).png" alt="Card Image"></div>
+            <div class="content-side">
+                <h1>Fatima's Bar<br> Call Party</h1>
+                <p style="color: var(--gold-solid); font-style: italic; margin: 15px 0;">
+                    With gratitude and excitement, I invite you to celebrate my call to the Bar.
+                </p>
+                <div style="color: white; margin-bottom: 10px;">
+                    <strong>Monday, May 4th at 6:00 PM</strong><br><br>
+                    <small>Fahad Restaurant & Banquet Hall, Calgary</small><br>
+                    <small> 5075 Falconridge Blvd NE <br> #1009, Calgary, AB T3J 4L8  </small>
+                </div>
+                <div class="main-buttons">
+                    <button class="btn-yes" onclick="openModal('yes')">YES, I'LL BE THERE</button>
+                    <button class="btn-no" onclick="openModal('no')">SORRY, I CAN'T MAKE IT</button>
+                </div>
+                <div style="color: #ccc; font-size: 0.9rem; cursor: pointer;">
+                    <span onclick="addCalendar()">Add to Calendar</span> | <span onclick="viewMap()">View Map</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="thanks-message">
+        <div class="thanks-box">
+            <!-- <h2 id="thanks-title">RSVP Received</h2> -->
+            <p id="thanks-body"></p>
+            <div class="refresh-note">Click anywhere or wait 10 seconds to return</div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="rsvpModal">
+        <div class="modal">
+            <h2 style="color: var(--gold-solid);">RSVP</h2>
+            <input type="text" id="guestName" placeholder="Your Name">
+            <div id="countDiv"><input type="number" id="guestCount" placeholder="Guests" value="1"></div>
+            <button id="saveBtn" onclick="submitRSVP()"
+                style="background:var(--gold-solid); padding: 12px; border:none; cursor:pointer; font-weight:bold; width: 100%; margin-top: 10px; border-radius: 50px;">SAVE
+                RESPONSE</button>
+            <button onclick="closeModal()"
+                style="background:#444; color:white; border:none; padding:10px; cursor:pointer; width: 100%; margin-top: 5px; border-radius: 50px;">CANCEL</button>
+        </div>
+    </div>
+
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbykpS6vy24gX4U0clw0tIoDT1VG534rwswNKGrRT-ZzSwgmvjielQSlJzcJRBCaB_7P/exec';
+        let rsvpType = '';
+
+        function openModal(t) {
+            rsvpType = t;
+            document.getElementById('rsvpModal').style.display = 'flex';
+            document.getElementById('countDiv').style.display = (t === 'no' ? 'none' : 'block');
+        }
+        function closeModal() { document.getElementById('rsvpModal').style.display = 'none'; }
+
+        function submitRSVP() {
+            const name = document.getElementById('guestName').value;
+            if (!name) return alert("Please enter your name");
+
+            const btn = document.getElementById('saveBtn');
+            btn.innerText = "Processing...";
+            btn.disabled = true;
+
+            fetch(scriptURL, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: JSON.stringify({
+                    name: name,
+                    status: rsvpType,
+                    count: rsvpType === 'no' ? 0 : document.getElementById('guestCount').value
+                })
+            }).then(() => {
+                showFinalMessage(name, rsvpType);
+            }).catch(() => {
+                alert("Error! Please try again.");
+                btn.innerText = "SAVE RESPONSE";
+                btn.disabled = false;
+            });
+        }
+
+        function showFinalMessage(name, status) {
+            closeModal();
+            document.getElementById('main-ui').style.display = 'none';
+            const thanksUI = document.getElementById('thanks-message');
+            const thanksBody = document.getElementById('thanks-body');
+
+            thanksUI.style.display = 'flex';
+
+            if (status === 'yes') {
+                thanksBody.innerHTML = `Warm regards, <strong>${name}</strong>.<br><br>Fatima is absolutely delighted that you'll be joining her for this special milestone. Your presence will make the evening truly memorable.`;
+            } else {
+                thanksBody.innerHTML = `Thank you for letting us know, <strong>${name}</strong>.<br><br>While we'll miss your presence at the celebration, Fatima sends her warmest wishes and appreciates your response.`;
+            }
+
+            // Extended Delay (10 seconds)
+            setTimeout(() => {
+                location.reload();
+            }, 30000);
+
+            // Allow manual click to refresh immediately
+            thanksUI.onclick = () => location.reload();
+        }
+
+        function addCalendar() {
+            window.open('https://www.google.com/calendar/render?action=TEMPLATE&text=Fatima Bar Call Party&dates=20260504T173000Z/20260504T203000Z&location=5075 Falconridge Blvd NE Calgary', '_blank');
+        }
+        function viewMap() {
+            window.open('https://www.google.com/maps/search/?api=1&query=5075+Falconridge+Blvd+NE+1009+Calgary', '_blank');
+        }
+    </script>
+</body>
+
+</html>
